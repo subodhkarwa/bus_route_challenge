@@ -1,3 +1,5 @@
+package routes;
+
 import static spark.Spark.*;
 import spark.*;
 import com.google.gson.Gson;
@@ -7,6 +9,12 @@ import java.util.Set;
 import java.util.HashMap;
 
 public class BusServer {
+    private BusRouter busRouter;
+
+    public BusServer(BusRouter busRouter) {
+        this.busRouter = busRouter;
+    }
+
     public void start() {
         port(8088);
         get("/api/direct", (request, response) -> {
@@ -25,14 +33,16 @@ public class BusServer {
     public String findRoute(Request request) {
         Integer dep_sid = Integer.parseInt(request.queryParams("dep_sid"));
         Integer arr_sid = Integer.parseInt(request.queryParams("arr_sid"));
-        HashMap <String, Object> result = new HashMap();
+        HashMap <String, Object> resp = new HashMap();
         Gson gson = new Gson();
 
-        result.put("dep_sid", dep_sid);
-        result.put("arr_sid", arr_sid);
-        result.put("direct_bus_route", false);
+        boolean result = busRouter.findDirectRoute(dep_sid, arr_sid);
 
-        return gson.toJson(result);
+        resp.put("dep_sid", dep_sid);
+        resp.put("arr_sid", arr_sid);
+        resp.put("direct_bus_route", result);
+
+        return gson.toJson(resp);
 
     }
 
