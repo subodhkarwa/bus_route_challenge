@@ -13,3 +13,4 @@ Some things I would've liked to fix given more time:
 * Parallelize!
 * I would've liked to add tests to Spark but I could not get these to work.
 * I would not consider this "production-ready" code, but given the time constraints plus my limited Java knowledge I'm happy to have arrived at a solution.
+* Adding logging and more robust parameter validation.
