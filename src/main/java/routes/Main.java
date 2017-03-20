@@ -1,7 +1,6 @@
+package routes;
 import java.io.*;
 import static spark.Spark.*;
-import routes.*;
-
 
 public class Main {
     public static void main(String[] args) {
