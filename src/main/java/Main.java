@@ -1,17 +1,17 @@
 import java.io.*;
 import static spark.Spark.*;
-import routes.BusServer;
-import routes.BusRouter;
+import routes.*;
+
 
 public class Main {
     public static void main(String[] args) {
         BusRouter br = parseInputFile(args[0]);
-        //        BusServer server = new BusServer(br);
-        //        server.start();
+        BusServer server = new BusServer(br);
+        server.start();
     }
 
     public static BusRouter parseInputFile(String filename) {
-        String current;
+        BusRouter busRouter = new BusRouter();
         FileReader fr = null;
         BufferedReader br = null;
 
@@ -19,11 +19,19 @@ public class Main {
             fr = new FileReader(filename);
             br = new BufferedReader(fr);
 
-            System.out.println(br.readLine());
+            Integer numRoutes = Integer.parseInt(br.readLine());
+            for (int i = 0; i < numRoutes; i++) {
+                String[] currentRoute = br.readLine().split(" ");
+                Route r = new Route(Integer.parseInt(currentRoute[0]));
+                for (int j = 1; j < currentRoute.length; j++) {
+                    r.addStation(Integer.parseInt(currentRoute[j]));
+                }
+                busRouter.addRoute(r);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return new BusRouter();
+        return busRouter;
     }
 }

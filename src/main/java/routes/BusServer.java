@@ -43,7 +43,6 @@ public class BusServer {
         resp.put("direct_bus_route", result);
 
         return gson.toJson(resp);
-
     }
 
     public boolean hasValidParameters(Request request) {
